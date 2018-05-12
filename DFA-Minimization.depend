@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1526160050 source:d:\alexandru\uni\proiecte\lfa\dfa-minimization\main.cpp
+	<iostream>
+	<fstream>
+	<vector>
+
