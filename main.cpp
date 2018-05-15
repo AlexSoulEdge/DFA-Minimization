@@ -66,86 +66,6 @@ void citire_stari_finale(vector <int> &v, int &n)
     }
 }
 
-//Se verifica daca datele sunt valide
-bool verificari_stari(vector <int> v1,int n1, vector <int> v2,int n2, vector <tranzitie> v3,int n3,vector <char> v4, int n4)
-{
-    bool e = 0;
-    for(int i = 0; i < n2; i ++)
-    {
-        e = 0;
-        for(int j = 0; j < n1;j ++)
-            if(v1[j] == v2[i])
-            {
-                e = 1;
-                break;
-            }
-        if(e == 0)
-        {
-            cout << "Una din starile finale este invalida!";
-            return false;
-        }
-    }
-
-    for(int i = 0; i < n3; i ++)
-    {
-        e = 0;
-        for(int j = 0;j < n1;j ++)
-            if(v1[j] == v3[i].stare1)
-            {
-                e = 1;
-                break;
-            }
-        if(e == 0)
-        {
-            cout << "Una din starile initiale ale functiei nu este valabila!";
-            return false;
-        }
-    }
-    for(int i = 0;i < n3;i ++)
-    {
-        e = 0;
-        for(int j = 0; j < n1; j++)
-            if(v1[j] == v3[i].stare2)
-            {
-                e = 1;
-                break;
-            }
-        if(e == 0)
-        {
-            cout << "Una din starile finale ale functiei nu este valabila!";
-            return false;
-        }
-    }
-    for(int i = 0; i < n3;i ++)
-    {
-        e = 0;
-        for(int j = 0; j < n4; j ++)
-            if(v4[j] == v3[i].alf)
-            {
-                e = 1;
-                break;
-            }
-        if(e == 0)
-        {
-            cout << "Una din alfabetul functiei nu este valabila!";
-            return false;
-        }
-    }
-    return true;
-}
-
-bool verifica_complet(vector <tranzitie> v, int n, int cate, int totale, vector<int>v2)
-{
-	char f[100] = {0};
-	for(int i = 0; i<n; i++)
-        f[v[i].stare1]++;
-
-    for(int i=0;i<totale;i++)if(f[i]!=cate)
-        return false;
-
-    return true;
-}
-
 void algoritm(vector <int> stari, int nr_stari, vector<int> stari_finale, int nr_stari_finale, vector<tranzitie> functie, int nr_functii, vector <char> alfabet, int nr_alfabet)
 {
     int matrice[nr_stari][nr_stari];    // Tabelul pe care vom aplica teorema Myhill-blahblah;
@@ -373,14 +293,8 @@ int main()
 
     fin.close();
 
-
-    if(verificari_stari(stari, nr_stari_initiale, stari_finale, nr_stari_finale, functii, nr_functii, alfabet, nr_alfabet) == true)
-    {
-    	if(verifica_complet(functii, nr_functii, nr_alfabet, nr_stari_initiale, stari) == true)
-    	{
-            int matrice[nr_stari_initiale][nr_stari_initiale];
-
-            //initializare matrice in forma piramidala
+    int matrice[nr_stari_initiale][nr_stari_initiale];
+	//initializare matrice in forma piramidala
             for(int i = 0; i < nr_stari_initiale; i ++)
             for(int j = 0;j < nr_stari_initiale;j ++)
             {
@@ -390,9 +304,6 @@ int main()
                     matrice[i][j] = 0;
             }
             algoritm(stari, nr_stari_initiale, stari_finale, nr_stari_finale, functii, nr_functii, alfabet, nr_alfabet);
-    	}
-        else
-            cout << "Incomplet";
-    }
+
     return 0;
 }
